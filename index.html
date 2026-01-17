@@ -1,0 +1,1613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - t ai pdf 2 </title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Poppins:wght@600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Animate.css for beautiful animations -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        /* ========================================
+           CSS Variables (Vite-style theming)
+           ======================================== */
+        :root {
+            --color-primary: #3b82f6;
+            --color-secondary: #8b5cf6;
+            --color-accent: #06b6d4;
+            --color-bg: #ffffff;
+            --color-text: #1e293b;
+            --color-text-muted: #6b7280;
+            --color-border: #e5e7eb;
+            --color-surface: #ffffff;
+            --color-surface-elevated: #f9fafb;
+
+            --gradient-primary: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            --gradient-dark: linear-gradient(135deg, #1f2937, #111827);
+
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 40px rgb(0 0 0 / 0.08);
+            --shadow-xl: 0 25px 60px rgb(0 0 0 / 0.15);
+
+            --radius-sm: 8px;
+            --radius-md: 16px;
+            --radius-lg: 24px;
+            --radius-full: 9999px;
+
+            --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+            --font-display: 'Poppins', var(--font-sans);
+
+            --ease-out: cubic-bezier(0.4, 0, 0.2, 1);
+            --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+            --container-max: 1200px;
+            --container-narrow: 800px;
+            --section-padding: clamp(60px, 10vw, 100px);
+        }
+
+        /* ========================================
+           Base Reset & Typography
+           ======================================== */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html {
+            scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--color-text);
+            background: var(--color-bg);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-display);
+            font-weight: 800;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+        }
+
+        img { max-width: 100%; height: auto; display: block; }
+        a { color: inherit; text-decoration: none; }
+
+        /* ========================================
+           Animations
+           ======================================== */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInLeft {
+            from { opacity: 0; transform: translateX(-30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes fadeInRight {
+            from { opacity: 0; transform: translateX(30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        @keyframes shimmer {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+
+        /* Animate.css scroll trigger support */
+        .animate__animated {
+            --animate-duration: 0.8s;
+        }
+        .animate__animated.animate__slow {
+            --animate-duration: 1.2s;
+        }
+        .animate__animated.animate__fast {
+            --animate-duration: 0.5s;
+        }
+
+        /* Hide elements until they're animated */
+        [data-animate] {
+            opacity: 0;
+        }
+        [data-animate].animate__animated {
+            opacity: 1;
+        }
+
+        /* Editor-compatible background classes */
+        .has-bg-image {
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        [data-bg-image] {
+            background-image: var(--bg-image);
+        }
+        .has-gradient-bg {
+            background: var(--gradient-primary);
+        }
+        .has-custom-bg {
+            background: var(--color-surface);
+        }
+
+        /* Stagger animations for lists */
+        .stagger > *:nth-child(1) { --animate-delay: 0.1s; }
+        .stagger > *:nth-child(2) { --animate-delay: 0.2s; }
+        .stagger > *:nth-child(3) { --animate-delay: 0.3s; }
+        .stagger > *:nth-child(4) { --animate-delay: 0.4s; }
+        .stagger > *:nth-child(5) { --animate-delay: 0.5s; }
+        .stagger > *:nth-child(6) { --animate-delay: 0.6s; }
+
+        /* Custom animation utilities */
+        .hover-float:hover {
+            animation: float 2s ease-in-out infinite;
+        }
+        .hover-pulse:hover {
+            animation: pulse 1s ease-in-out infinite;
+        }
+        .hover-bounce:hover {
+            animation: animate__bounce 1s;
+        }
+
+        /* ========================================
+           Layout
+           ======================================== */
+        .container {
+            width: 100%;
+            max-width: var(--container-max);
+            margin: 0 auto;
+            padding: 0 5%;
+        }
+        .container--narrow { max-width: var(--container-narrow); }
+
+        /* ========================================
+           Navigation
+           ======================================== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 80px;
+            padding: 0 5%;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            transition: all 0.3s var(--ease-out);
+        }
+        .navbar.scrolled { box-shadow: var(--shadow-md); }
+
+        .logo {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 900;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links { display: flex; gap: 2rem; }
+        .nav-link {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--color-text);
+            position: relative;
+            padding: 0.5rem 0;
+            transition: color 0.3s var(--ease-out);
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-primary);
+            transition: width 0.3s var(--ease-out);
+        }
+        .nav-link:hover, .nav-link.active { color: var(--color-primary); }
+        .nav-link:hover::after, .nav-link.active::after { width: 100%; }
+
+        /* Mobile Menu Toggle (Hamburger) */
+        .nav-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 44px;
+            height: 44px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 1001;
+        }
+        .nav-toggle span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--color-text);
+            border-radius: 2px;
+            transition: all 0.3s var(--ease-out);
+            position: relative;
+        }
+        .nav-toggle span::before,
+        .nav-toggle span::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            width: 24px;
+            height: 2px;
+            background: var(--color-text);
+            border-radius: 2px;
+            transition: all 0.3s var(--ease-out);
+        }
+        .nav-toggle span::before { top: -8px; }
+        .nav-toggle span::after { top: 8px; }
+
+        /* Hamburger animation when active */
+        .nav-toggle.active span { background: transparent; }
+        .nav-toggle.active span::before {
+            top: 0;
+            transform: rotate(45deg);
+        }
+        .nav-toggle.active span::after {
+            top: 0;
+            transform: rotate(-45deg);
+        }
+
+        /* ========================================
+           Hero Section
+           ======================================== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 120px 5% 80px;
+            background: var(--gradient-primary);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 80%;
+            height: 150%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .hero .container { position: relative; z-index: 1; }
+        .hero__title {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 0.8s var(--ease-out);
+        }
+        .hero__subtitle {
+            font-size: clamp(1.1rem, 2vw, 1.4rem);
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto 2.5rem;
+            animation: fadeInUp 0.8s var(--ease-out) 0.1s both;
+        }
+        #hero-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* ========================================
+           Page Header
+           ======================================== */
+        .page-header {
+            padding: 160px 5% 80px;
+            background: var(--gradient-primary);
+            color: white;
+            text-align: center;
+        }
+        .page-header__title {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+        }
+        .breadcrumb {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-bottom: 1rem;
+        }
+        .breadcrumb a { opacity: 0.7; transition: opacity 0.3s; }
+        .breadcrumb a:hover { opacity: 1; }
+
+        /* ========================================
+           Sections
+           ======================================== */
+        .section {
+            padding: var(--section-padding) 5%;
+        }
+        .section--gray { background: var(--color-surface-elevated); }
+        .section--dark { background: #0a0a0a; color: white; }
+        .section--gradient { background: var(--gradient-primary); color: white; }
+
+        .section__title {
+            font-size: clamp(1.75rem, 4vw, 2.75rem);
+            margin-bottom: 1rem;
+        }
+        .section__text {
+            font-size: 1.1rem;
+            color: var(--color-text-muted);
+            max-width: 700px;
+            margin-bottom: 2rem;
+        }
+        .section--dark .section__text,
+        .section--gradient .section__text { color: rgba(255,255,255,0.8); }
+
+        /* ========================================
+           Grid System
+           ======================================== */
+        .grid {
+            display: grid;
+            gap: 2rem;
+        }
+        .grid--2 { grid-template-columns: repeat(2, 1fr); }
+        .grid--3 { grid-template-columns: repeat(3, 1fr); }
+        .grid--4 { grid-template-columns: repeat(4, 1fr); }
+        .grid--align-center { align-items: center; }
+
+        @media (max-width: 1024px) {
+            .grid--4 { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .grid--2, .grid--3, .grid--4 { grid-template-columns: 1fr; }
+        }
+
+        /* ========================================
+           Buttons
+           ======================================== */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.875rem 2rem;
+            font-family: var(--font-sans);
+            font-weight: 600;
+            font-size: 0.95rem;
+            border: 2px solid transparent;
+            border-radius: var(--radius-full);
+            cursor: pointer;
+            transition: all 0.3s var(--ease-out);
+            text-decoration: none;
+        }
+        .btn:hover { transform: translateY(-2px); }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        .btn-primary:hover { box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3); }
+
+        .btn-outline {
+            background: transparent;
+            border-color: var(--color-primary);
+            color: var(--color-primary);
+        }
+        .btn-outline:hover {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        .btn-lg { padding: 1.125rem 2.5rem; font-size: 1rem; }
+        .btn-block { width: 100%; }
+
+        .hero .btn,
+        .section--dark .btn,
+        .section--gradient .btn {
+            background: white;
+            color: var(--color-primary);
+        }
+        .hero .btn-primary { background: white; color: var(--color-primary); }
+
+        /* ========================================
+           Cards
+           ======================================== */
+        .card {
+            background: var(--color-surface);
+            padding: 2rem;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            transition: all 0.4s var(--ease-out);
+        }
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .card__icon {
+            display: block;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        .card__title {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+        }
+        .card__text {
+            color: var(--color-text-muted);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+        .card__subtitle {
+            color: var(--color-text-muted);
+            font-size: 0.9rem;
+        }
+        .card__quote {
+            font-size: 1.05rem;
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+        .card__author { font-weight: 600; }
+
+        .card--testimonial { text-align: center; }
+        .card--form { padding: 2.5rem; }
+
+        /* Pricing cards */
+        .card--pricing { position: relative; overflow: hidden; }
+        .card--featured {
+            border: 2px solid var(--color-primary);
+            transform: scale(1.05);
+        }
+        .card--featured:hover { transform: scale(1.07); }
+        .pricing__badge {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: var(--gradient-primary);
+            color: white;
+            padding: 0.5rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        .pricing__name { font-size: 1.5rem; margin-bottom: 0.5rem; }
+        .pricing__price {
+            font-size: 3rem;
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1.5rem;
+        }
+        .pricing__features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+        .pricing__features li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        /* Team cards */
+        .card--team { text-align: center; }
+        .avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: var(--gradient-primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 0 auto 1.5rem;
+        }
+
+        /* ========================================
+           Stats
+           ======================================== */
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 4rem;
+            flex-wrap: wrap;
+        }
+        .stat { text-align: center; }
+        .stat__number {
+            display: block;
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 900;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+        .stat__label { opacity: 0.8; font-size: 1rem; }
+
+        /* ========================================
+           Process Steps
+           ======================================== */
+        .process {
+            display: flex;
+            justify-content: space-between;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+        .process__step {
+            flex: 1;
+            min-width: 200px;
+            text-align: center;
+        }
+        .process__number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-primary);
+            color: white;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        .process__title { font-size: 1.25rem; margin-bottom: 0.5rem; }
+        .process__text { color: var(--color-text-muted); }
+
+        /* ========================================
+           Forms
+           ======================================== */
+        .form { display: flex; flex-direction: column; gap: 1.5rem; }
+        .form__group { display: flex; flex-direction: column; gap: 0.5rem; }
+        .form__label { font-weight: 600; font-size: 0.9rem; }
+        .form__input, .form__textarea {
+            padding: 1rem;
+            border: 2px solid var(--color-border);
+            border-radius: var(--radius-md);
+            font-family: var(--font-sans);
+            font-size: 1rem;
+            transition: border-color 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out);
+        }
+        .form__input:focus, .form__textarea:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+        }
+        .form__textarea { min-height: 150px; resize: vertical; }
+
+        /* ========================================
+           Gallery
+           ======================================== */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        .gallery__item {
+            aspect-ratio: 4/3;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+        }
+        .gallery__item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s var(--ease-out);
+        }
+        .gallery__item:hover img { transform: scale(1.1); }
+
+        /* ========================================
+           Placeholders
+           ======================================== */
+        .placeholder {
+            width: 100%;
+            height: 100%;
+            min-height: 300px;
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .placeholder--gradient {
+            background: linear-gradient(135deg,
+                color-mix(in srgb, var(--color-primary) 20%, transparent),
+                color-mix(in srgb, var(--color-secondary) 20%, transparent)
+            );
+        }
+        .map-placeholder {
+            height: 400px;
+            border: 2px dashed var(--color-border);
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-text-muted);
+            font-size: 1.2rem;
+        }
+
+        /* ========================================
+           Footer
+           ======================================== */
+        .footer {
+            background: #0a0a0a;
+            color: white;
+            padding: 80px 5% 40px;
+        }
+        .footer__grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 3rem;
+        }
+        .footer__logo {
+            font-family: var(--font-display);
+            font-size: 1.75rem;
+            font-weight: 900;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: block;
+            margin-bottom: 1rem;
+        }
+        .footer__tagline { opacity: 0.7; }
+        .footer__title { margin-bottom: 1.5rem; font-size: 1rem; }
+        .footer__nav { display: flex; flex-direction: column; gap: 0.75rem; }
+        .footer__nav a {
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+        .footer__nav a:hover { opacity: 1; }
+        .footer__contact p {
+            opacity: 0.7;
+            margin-bottom: 0.5rem;
+        }
+        .footer__bottom {
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+            opacity: 0.6;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .footer__grid { grid-template-columns: 1fr; gap: 2rem; }
+        }
+
+        /* ========================================
+           Utilities
+           ======================================== */
+        .text-center { text-align: center; }
+        .text-gradient {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ========================================
+           Responsive
+           ======================================== */
+        @media (max-width: 768px) {
+            .navbar { height: 70px; }
+
+            /* Show hamburger on mobile */
+            .nav-toggle { display: flex; }
+
+            /* Mobile menu styles */
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 80%;
+                max-width: 320px;
+                height: 100vh;
+                background: rgba(255, 255, 255, 0.98);
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 2rem;
+                padding: 2rem;
+                box-shadow: -5px 0 30px rgba(0, 0, 0, 0.1);
+                transition: right 0.3s var(--ease-out);
+                z-index: 1000;
+            }
+            .nav-links.active {
+                right: 0;
+            }
+            .nav-link {
+                font-size: 1.2rem;
+                padding: 0.75rem 0;
+            }
+
+            /* Mobile menu overlay */
+            .nav-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s var(--ease-out);
+                z-index: 999;
+            }
+            .nav-overlay.active {
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .hero { padding: 100px 5% 60px; }
+            .stats { gap: 2rem; }
+            .process { flex-direction: column; align-items: center; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Mobile menu overlay -->
+    <div class="nav-overlay" id="navOverlay"></div>
+
+    <nav class="navbar">
+        <div class="logo">t ai pdf 2 </div>
+        <div class="nav-links" id="navLinks"><a href="index.html" class="nav-link active">Home</a></div>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu">
+            <span></span>
+        </button>
+    </nav>
+
+    <section class="hero hero--gradient section--blur-blob" data-section-type="hero">
+  <div class="container text-center">
+    <div class="hero__badge" data-animate="fadeIn">
+      <span>✨</span>
+      <span>Trusted by 50,000+ Users</span>
+    </div>
+    <h1 class="hero__title hero__title--gradient" data-animate="fadeInUp" data-animate-delay="0.1s">
+      Transform PDFs Instantly
+    </h1>
+    <p class="hero__subtitle max-w-prose mx-auto" data-animate="fadeInUp" data-animate-delay="0.2s">
+      Unlock the power of AI to extract, analyze, and transform any PDF document in seconds. From complex reports to simple forms, experience the future of document intelligence that saves you hours of manual work.
+    </p>
+    <div class="hero__actions" data-animate="fadeInUp" data-animate-delay="0.3s">
+      <a href="#contact" class="btn btn-white btn-lg btn--shine">Start Free Trial</a>
+      <a href="#services" class="btn btn-outline btn-lg">See Demo →</a>
+    </div>
+    <div class="hero__scroll-indicator" data-animate="fadeIn" data-animate-delay="0.6s">
+      <span>↓</span>
+    </div>
+  </div>
+  <div class="hero__float hero__float--1">◆</div>
+  <div class="hero__float hero__float--2">○</div>
+</section>
+
+    <section class="section section--lg section--mesh" data-section-type="features">
+  <div class="container">
+    <div class="text-center mb-16" data-animate="fadeInUp">
+      <span class="card__tag mb-4">Why Choose Us</span>
+      <h2 class="section__title">Transform Your PDF Workflow with AI Intelligence</h2>
+      <p class="text-muted text-lg max-w-prose mx-auto">Experience the future of document processing with our advanced AI that understands, analyzes, and extracts insights from your PDFs instantly.</p>
+    </div>
+    <div class="grid grid--3 stagger">
+      <div class="card card--glass card--glow hover-lift" data-animate="fadeInUp">
+        <div class="card__icon card__icon--blob">🚀</div>
+        <h3 class="card__title">Save Hours Every Day</h3>
+        <p class="card__text">Stop manually reading through hundreds of pages. Our AI instantly extracts key information, summaries, and insights so you can focus on what matters most.</p>
+      </div>
+      <div class="card card--glass card--glow hover-lift" data-animate="fadeInUp">
+        <div class="card__icon card__icon--blob">⚡</div>
+        <h3 class="card__title">Get Instant Answers</h3>
+        <p class="card__text">Ask questions about your documents and receive precise, contextual answers in seconds. Turn any PDF into an interactive knowledge base.</p>
+      </div>
+      <div class="card card--glass card--glow hover-lift" data-animate="fadeInUp">
+        <div class="card__icon card__icon--blob">✨</div>
+        <h3 class="card__title">Make Smarter Decisions</h3>
+        <p class="card__text">Uncover hidden patterns, trends, and insights across multiple documents. Transform raw data into actionable intelligence for better business outcomes.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+    <section class="section section--lg" data-section-type="about-preview">
+  <div class="container">
+    <div class="feature-showcase">
+      <div class="about__content" data-animate="fadeInLeft">
+        <span class="card__tag mb-4">About Us</span>
+        <h2 class="section__title">Transforming PDF Workflows with Intelligent AI</h2>
+        <p class="text-lg text-muted mb-6">Born from the frustration of endless hours spent manually processing PDFs, t ai pdf 2 represents a breakthrough in document intelligence. We believe that every professional deserves to spend their time on meaningful work, not tedious document tasks. Our AI-powered platform transforms how you interact with PDFs—from instant data extraction to intelligent summarization—making complex document workflows feel effortless.</p>
+        <p class="text-muted mb-8">Built by a team of AI researchers and document processing experts, we've created technology that understands context, learns from patterns, and delivers results with unprecedented accuracy. Whether you're processing invoices, analyzing contracts, or extracting insights from research papers, our platform adapts to your unique needs while maintaining enterprise-grade security and reliability.</p>
+        <div class="flex gap-3">
+          <a href="about.html" class="btn btn-primary btn--shine">Our Story →</a>
+          <a href="#contact" class="btn btn-outline">Get in Touch</a>
+        </div>
+      </div>
+      <div class="about__image" data-animate="fadeInRight" data-animate-delay="0.2s">
+        <div class="card card--gradient-border has-gradient-bg">
+          <span>🤖</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+    <section class="section section--lg section--decorated" data-section-type="testimonials">
+  <div class="container">
+    <div class="text-center mb-16" data-animate="fadeInUp">
+      <span class="card__tag mb-4">Testimonials</span>
+      <h2 class="section__title">Loved by Thousands of Users</h2>
+      <p class="text-muted text-lg">See how AI PDF 2 transforms document workflows</p>
+    </div>
+    <div class="grid grid--3 stagger">
+      <div class="testimonial card--glass hover-lift" data-animate="fadeInUp">
+        <div class="testimonial__stars mb-4">★★★★★</div>
+        <p class="testimonial__quote">"AI PDF 2 saved me 15 hours per week on contract reviews. The AI instantly highlights key clauses and potential issues I might have missed. What used to take me 3 hours now takes 20 minutes with better accuracy."</p>
+        <div class="testimonial__author">
+          <div class="testimonial__avatar">S</div>
+          <div>
+            <p class="testimonial__name">Sarah Chen</p>
+            <p class="testimonial__role">Legal Counsel, TechFlow Inc</p>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial card--glass hover-lift" data-animate="fadeInUp">
+        <div class="testimonial__stars mb-4">★★★★★</div>
+        <p class="testimonial__quote">"As a researcher analyzing 200+ academic papers monthly, AI PDF 2 is a game-changer. It extracts key findings, creates perfect summaries, and even identifies connections between studies. My literature reviews are now 10x faster."</p>
+        <div class="testimonial__author">
+          <div class="testimonial__avatar">M</div>
+          <div>
+            <p class="testimonial__name">Dr. Michael Rodriguez</p>
+            <p class="testimonial__role">Research Director, Stanford Medical</p>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial card--glass hover-lift" data-animate="fadeInUp">
+        <div class="testimonial__stars mb-4">★★★★★</div>
+        <p class="testimonial__quote">"Our team processes 500+ invoices daily. AI PDF 2 automatically extracts all data with 99.8% accuracy and flags discrepancies instantly. We reduced processing time by 80% and eliminated manual errors completely."</p>
+        <div class="testimonial__author">
+          <div class="testimonial__avatar">A</div>
+          <div>
+            <p class="testimonial__name">Amanda Foster</p>
+            <p class="testimonial__role">Finance Manager, Global Logistics Co</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="text-center mt-12" data-animate="fadeInUp" data-animate-delay="0.3s">
+      <div class="stats">
+        <div class="stat">
+          <div class="stat__number" data-count="50000" data-suffix="+">0+</div>
+          <div class="stat__label">Happy Users</div>
+        </div>
+        <div class="stat">
+          <div class="stat__number" data-count="2" data-suffix="M+">0M+</div>
+          <div class="stat__label">PDFs Processed</div>
+        </div>
+        <div class="stat">
+          <div class="stat__number" data-count="99" data-suffix=".9%">0%</div>
+          <div class="stat__label">Accuracy Rate</div>
+        </div>
+        <div class="stat">
+          <div class="stat__number" data-count="4" data-suffix=".9/5">0/5</div>
+          <div class="stat__label">User Rating</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+    <section class="section section--dark section--lg" data-section-type="stats">
+  <div class="container">
+    <div class="text-center mb-12" data-animate="fadeInUp">
+      <h2 class="section__title text-white">Transforming PDF Processing at Scale</h2>
+    </div>
+    <div class="stats stagger">
+      <div class="text-center" data-animate="fadeInUp">
+        <span class="stat__number" data-count="2500" data-suffix="+">0+</span>
+        <span class="stat__label text-white" style="opacity: 0.8;">PDFs Processed Daily</span>
+      </div>
+      <div class="text-center" data-animate="fadeInUp">
+        <span class="stat__number" data-count="99" data-suffix="%">0%</span>
+        <span class="stat__label text-white" style="opacity: 0.8;">Accuracy Rate</span>
+      </div>
+      <div class="text-center" data-animate="fadeInUp">
+        <span class="stat__number" data-count="85" data-suffix="%">0%</span>
+        <span class="stat__label text-white" style="opacity: 0.8;">Time Savings</span>
+      </div>
+      <div class="text-center" data-animate="fadeInUp">
+        <span class="stat__number" data-count="3" data-suffix="s">0s</span>
+        <span class="stat__label text-white" style="opacity: 0.8;">Average Processing Time</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+    <section class="section section--xl" style="background: var(--gradient-primary);" data-section-type="cta">
+  <div class="container text-center">
+    <div class="card--glass-dark">
+      <h2 class="section__title text-white mb-4" data-animate="fadeInUp">
+        Ready to Transform Your PDF Workflow?
+      </h2>
+      <p class="text-xl mb-8" data-animate="fadeInUp" data-animate-delay="0.1s">
+        Join thousands of professionals who save 10+ hours weekly with AI-powered PDF intelligence. Start your free trial today and experience instant document insights.
+      </p>
+      <div class="flex justify-center gap-4 flex-wrap" data-animate="fadeInUp" data-animate-delay="0.2s">
+        <a href="#contact" class="btn btn-white btn-xl btn--shine">Start Free Trial →</a>
+        <a href="#services" class="btn btn-outline btn-xl">See Features</a>
+      </div>
+      <p class="mt-6 text-sm" data-animate="fadeIn" data-animate-delay="0.3s">
+        ✓ No credit card required &nbsp;&nbsp; ✓ Process 100 PDFs free &nbsp;&nbsp; ✓ Cancel anytime
+      </p>
+    </div>
+  </div>
+</section>
+
+    <footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div>
+        <h3 class="footer__brand">t ai pdf 2</h3>
+        <p class="footer__description">Transform your PDFs with cutting-edge AI technology. Extract, analyze, and interact with your documents like never before.</p>
+        <div class="footer__social">
+          <a href="#" aria-label="Facebook">📘</a>
+          <a href="#" aria-label="Twitter">🐦</a>
+          <a href="#" aria-label="Instagram">📷</a>
+          <a href="#" aria-label="LinkedIn">💼</a>
+        </div>
+      </div>
+      <div>
+        <h4 class="footer__title">Quick Links</h4>
+        <ul class="footer__links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer__title">AI Features</h4>
+        <ul class="footer__links">
+          <li><a href="#">Smart Text Extraction</a></li>
+          <li><a href="#">Document Analysis</a></li>
+          <li><a href="#">AI Chat Interface</a></li>
+          <li><a href="#">Batch Processing</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer__title">Contact Info</h4>
+        <ul class="footer__links">
+          <li>📍 San Francisco, CA</li>
+          <li>📞 (555) 123-4567</li>
+          <li>✉️ hello@taipdf2.com</li>
+          <li>🕒 24/7 AI Support</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p>© 2026 t ai pdf 2. All rights reserved. | Privacy Policy | Terms of Service</p>
+    </div>
+  </div>
+</footer>
+
+    <script>
+        // Mobile menu toggle
+        (function() {
+            const navToggle = document.getElementById('navToggle');
+            const navLinks = document.getElementById('navLinks');
+            const navOverlay = document.getElementById('navOverlay');
+
+            if (navToggle && navLinks) {
+                navToggle.addEventListener('click', function() {
+                    navToggle.classList.toggle('active');
+                    navLinks.classList.toggle('active');
+                    if (navOverlay) navOverlay.classList.toggle('active');
+                    document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+                });
+
+                // Close menu when clicking overlay
+                if (navOverlay) {
+                    navOverlay.addEventListener('click', function() {
+                        navToggle.classList.remove('active');
+                        navLinks.classList.remove('active');
+                        navOverlay.classList.remove('active');
+                        document.body.style.overflow = '';
+                    });
+                }
+
+                // Close menu when clicking a link
+                navLinks.querySelectorAll('a').forEach(function(link) {
+                    link.addEventListener('click', function() {
+                        navToggle.classList.remove('active');
+                        navLinks.classList.remove('active');
+                        if (navOverlay) navOverlay.classList.remove('active');
+                        document.body.style.overflow = '';
+                    });
+                });
+            }
+        })();
+
+        // Intersection Observer for scroll animations using Animate.css
+        const animateOnScroll = () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        const el = entry.target;
+                        const animationType = el.dataset.animate || 'fadeInUp';
+                        const delay = el.dataset.animateDelay || '0s';
+
+                        // Set custom delay if specified
+                        if (delay !== '0s') {
+                            el.style.setProperty('--animate-delay', delay);
+                        }
+
+                        // Add Animate.css classes
+                        el.classList.add('animate__animated', 'animate__' + animationType);
+
+                        // Clean up after animation completes
+                        el.addEventListener('animationend', () => {
+                            el.classList.remove('animate__animated', 'animate__' + animationType);
+                            el.style.opacity = '1';
+                        }, { once: true });
+
+                        observer.unobserve(el);
+                    }
+                });
+            }, { threshold: 0.1, rootMargin: '50px' });
+
+            document.querySelectorAll('[data-animate]').forEach(el => observer.observe(el));
+        };
+
+        // Three.js background effect
+        const initThreeJS = () => {
+            const heroSection = document.querySelector('section:first-of-type, .hero');
+            if (!heroSection) return;
+
+            // Create canvas container
+            const canvas = document.createElement('canvas');
+            canvas.id = 'hero-canvas';
+            heroSection.style.position = 'relative';
+            heroSection.insertBefore(canvas, heroSection.firstChild);
+
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, heroSection.offsetWidth / heroSection.offsetHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+            renderer.setSize(heroSection.offsetWidth, heroSection.offsetHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+            // Get theme colors
+            const primary = getComputedStyle(document.documentElement).getPropertyValue('--primary').trim() || '#3b82f6';
+            const secondary = getComputedStyle(document.documentElement).getPropertyValue('--secondary').trim() || '#8b5cf6';
+
+            
+            // Particle system
+            const particlesGeometry = new THREE.BufferGeometry();
+            const particlesCount = 200;
+            const posArray = new Float32Array(particlesCount * 3);
+
+            for (let i = 0; i < particlesCount * 3; i++) {
+                posArray[i] = (Math.random() - 0.5) * 10;
+            }
+
+            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+
+            const particlesMaterial = new THREE.PointsMaterial({
+                size: 0.02,
+                color: primary,
+                transparent: true,
+                opacity: 0.8
+            });
+
+            const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+            scene.add(particlesMesh);
+
+            camera.position.z = 3;
+
+            let mouseX = 0, mouseY = 0;
+            document.addEventListener('mousemove', (e) => {
+                mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+                mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
+            });
+
+            const animate = () => {
+                requestAnimationFrame(animate);
+                particlesMesh.rotation.x += 0.001;
+                particlesMesh.rotation.y += 0.001;
+                particlesMesh.rotation.x += mouseY * 0.0005;
+                particlesMesh.rotation.y += mouseX * 0.0005;
+                renderer.render(scene, camera);
+            };
+            
+
+            animate();
+
+            // Handle resize
+            window.addEventListener('resize', () => {
+                camera.aspect = heroSection.offsetWidth / heroSection.offsetHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(heroSection.offsetWidth, heroSection.offsetHeight);
+            });
+        };
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', () => {
+            animateOnScroll();
+            if (typeof THREE !== 'undefined') {
+                initThreeJS();
+            }
+        });
+    </script>
+    
+    <!-- WebBuilder Dynamic Hydration Script -->
+    <script>
+    (function() {
+      'use strict';
+
+      // Configuration
+      const CONFIG = {
+        apiBaseUrl: 'http://192.168.1.159:5003',
+        orgId: '69600bf2b068242822a051ca',
+        debug: true // Enable debug mode to help diagnose issues
+      };
+
+      // Log initial config
+      console.log('[WebBuilder Hydration] Config:', CONFIG);
+      console.log('[WebBuilder Hydration] API Base URL:', CONFIG.apiBaseUrl);
+      console.log('[WebBuilder Hydration] Org ID:', CONFIG.orgId);
+
+      const API_URL = CONFIG.apiBaseUrl + '/api/webbuilder-public/' + CONFIG.orgId;
+      console.log('[WebBuilder Hydration] Full API URL:', API_URL);
+
+      // Utility: Format date
+      const formatDate = (dateStr) => {
+        if (!dateStr) return '';
+        const date = new Date(dateStr);
+        return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+      };
+
+      // Utility: Format price
+      const formatPrice = (price, currency = 'USD') => {
+        if (price === 0) return 'Free';
+        return new Intl.NumberFormat('en-US', { style: 'currency', currency }).format(price);
+      };
+
+      // Utility: Truncate text
+      const truncate = (text, maxLength = 100) => {
+        if (!text || text.length <= maxLength) return text || '';
+        return text.substring(0, maxLength).trim() + '...';
+      };
+
+      // Component Renderers
+      const renderers = {
+        // Events component
+        // API returns { success: true, data: [...events] } where each event has:
+        // title, eventStartDate, eventEndDate, venue, description, image, eventBanner
+        'live-events': (data, container) => {
+          const events = Array.isArray(data) ? data : (data.data || data.events || []);
+          if (!events.length) {
+            container.innerHTML = '<p class="no-data">No upcoming events</p>';
+            return;
+          }
+          container.innerHTML = events.slice(0, 6).map(event => `
+            <div class="dynamic-card event-card">
+              ${(event.image || event.eventBanner) ? `<img src="${event.image || event.eventBanner}" alt="${event.title}" class="card-image">` : ''}
+              <div class="card-content">
+                <span class="card-date">${formatDate(event.eventStartDate || event.startDate)}</span>
+                <h3 class="card-title">${event.title || event.name}</h3>
+                <p class="card-description">${truncate(event.description, 120)}</p>
+                ${(event.venue || event.location) ? `<span class="card-location">📍 ${event.venue || event.location}</span>` : ''}
+                <a href="${event.registrationUrl || '#'}" class="card-btn">Register</a>
+              </div>
+            </div>
+          `).join('');
+        },
+
+        // Tournaments component
+        'live-tournaments': (data, container) => {
+          const tournaments = data.tournaments || data || [];
+          if (!tournaments.length) {
+            container.innerHTML = '<p class="no-data">No upcoming tournaments</p>';
+            return;
+          }
+          container.innerHTML = tournaments.slice(0, 6).map(tournament => `
+            <div class="dynamic-card tournament-card">
+              ${tournament.image ? `<img src="${tournament.image}" alt="${tournament.name}" class="card-image">` : ''}
+              <div class="card-content">
+                <span class="card-date">${formatDate(tournament.startDate)}</span>
+                <h3 class="card-title">${tournament.name}</h3>
+                <p class="card-description">${truncate(tournament.description, 120)}</p>
+                ${tournament.location ? `<span class="card-location">📍 ${tournament.location}</span>` : ''}
+                <a href="${tournament.registrationUrl || '#'}" class="card-btn">Register</a>
+              </div>
+            </div>
+          `).join('');
+        },
+
+        // Classes component
+        'live-classes': (data, container) => {
+          const classes = data.classes || data || [];
+          if (!classes.length) {
+            container.innerHTML = '<p class="no-data">No classes available</p>';
+            return;
+          }
+          container.innerHTML = classes.slice(0, 6).map(cls => `
+            <div class="dynamic-card class-card">
+              ${cls.image ? `<img src="${cls.image}" alt="${cls.name}" class="card-image">` : ''}
+              <div class="card-content">
+                <h3 class="card-title">${cls.name}</h3>
+                <p class="card-description">${truncate(cls.description, 100)}</p>
+                ${cls.instructor ? `<span class="card-instructor">👤 ${cls.instructor}</span>` : ''}
+                ${cls.schedule ? `<span class="card-schedule">📅 ${cls.schedule}</span>` : ''}
+                <a href="#" class="card-btn">Book Now</a>
+              </div>
+            </div>
+          `).join('');
+        },
+
+        // Memberships component
+        'live-memberships': (data, container) => {
+          const memberships = data.memberships || data || [];
+          if (!memberships.length) {
+            container.innerHTML = '<p class="no-data">No membership plans available</p>';
+            return;
+          }
+          container.innerHTML = memberships.slice(0, 4).map((plan, index) => `
+            <div class="dynamic-card membership-card ${index === 1 ? 'featured' : ''}">
+              <div class="card-content">
+                <h3 class="card-title">${plan.name}</h3>
+                <div class="card-price">
+                  <span class="price-amount">${formatPrice(plan.price)}</span>
+                  <span class="price-period">/${plan.billingPeriod || 'month'}</span>
+                </div>
+                <p class="card-description">${truncate(plan.description, 80)}</p>
+                <ul class="card-features">
+                  ${(plan.features || []).slice(0, 5).map(f => `<li>✓ ${f}</li>`).join('')}
+                </ul>
+                <a href="${plan.signupUrl || '#'}" class="card-btn">Get Started</a>
+              </div>
+            </div>
+          `).join('');
+        },
+
+        // Products component
+        'live-products': (data, container) => {
+          const products = data.products || data || [];
+          if (!products.length) {
+            container.innerHTML = '<p class="no-data">No products available</p>';
+            return;
+          }
+          container.innerHTML = products.slice(0, 8).map(product => `
+            <div class="dynamic-card product-card">
+              ${product.image ? `<img src="${product.image}" alt="${product.name}" class="card-image">` : ''}
+              <div class="card-content">
+                <h3 class="card-title">${product.name}</h3>
+                <p class="card-description">${truncate(product.description, 80)}</p>
+                <div class="card-price">${formatPrice(product.price)}</div>
+                <a href="${product.purchaseUrl || '#'}" class="card-btn">Buy Now</a>
+              </div>
+            </div>
+          `).join('');
+        },
+
+        // Courses component
+        'live-courses': (data, container) => {
+          const courses = data.courses || data || [];
+          if (!courses.length) {
+            container.innerHTML = '<p class="no-data">No courses available</p>';
+            return;
+          }
+          container.innerHTML = courses.slice(0, 6).map(course => `
+            <div class="dynamic-card course-card">
+              ${course.image ? `<img src="${course.image}" alt="${course.title}" class="card-image">` : ''}
+              <div class="card-content">
+                <h3 class="card-title">${course.title}</h3>
+                <p class="card-description">${truncate(course.description, 100)}</p>
+                ${course.level ? `<span class="card-badge">${course.level}</span>` : ''}
+                ${course.duration ? `<span class="card-duration">⏱ ${course.duration}</span>` : ''}
+                <a href="${course.enrollUrl || '#'}" class="card-btn">Enroll Now</a>
+              </div>
+            </div>
+          `).join('');
+        },
+
+        // Bookings component
+        'live-bookings': (data, container) => {
+          const bookings = data.bookingTypes || data || [];
+          if (!bookings.length) {
+            container.innerHTML = '<p class="no-data">No booking options available</p>';
+            return;
+          }
+          container.innerHTML = bookings.slice(0, 6).map(booking => `
+            <div class="dynamic-card booking-card">
+              <div class="card-content">
+                <h3 class="card-title">${booking.name}</h3>
+                <p class="card-description">${truncate(booking.description, 100)}</p>
+                ${booking.duration ? `<span class="card-duration">⏱ ${booking.duration} min</span>` : ''}
+                ${booking.price ? `<div class="card-price">${formatPrice(booking.price)}</div>` : ''}
+                <a href="${booking.bookUrl || '#'}" class="card-btn">Book Now</a>
+              </div>
+            </div>
+          `).join('');
+        },
+
+        // Locations component
+        'live-locations': (data, container) => {
+          const locations = data.locations || data || [];
+          if (!locations.length) {
+            container.innerHTML = '<p class="no-data">No locations available</p>';
+            return;
+          }
+          container.innerHTML = locations.map(location => `
+            <div class="dynamic-card location-card">
+              ${location.image ? `<img src="${location.image}" alt="${location.name}" class="card-image">` : ''}
+              <div class="card-content">
+                <h3 class="card-title">${location.name}</h3>
+                <p class="card-address">📍 ${location.address}</p>
+                ${location.phone ? `<p class="card-phone">📞 ${location.phone}</p>` : ''}
+                ${location.hours ? `<p class="card-hours">🕐 ${location.hours}</p>` : ''}
+                <a href="${location.mapUrl || '#'}" class="card-btn" target="_blank">Get Directions</a>
+              </div>
+            </div>
+          `).join('');
+        }
+      };
+
+      // Fetch data and hydrate component
+      async function hydrateComponent(container) {
+        const componentType = container.dataset.component;
+        const endpoint = componentType.replace('live-', '');
+
+        if (!renderers[componentType]) {
+          console.warn('Unknown component type:', componentType);
+          return;
+        }
+
+        // Show loading state
+        container.classList.add('loading');
+
+        // Build query params from data attributes
+        const params = new URLSearchParams();
+        if (container.dataset.limit) params.append('limit', container.dataset.limit);
+        if (container.dataset.upcoming === 'true') params.append('upcoming', 'true');
+        if (container.dataset.featured === 'true') params.append('featured', 'true');
+        const queryString = params.toString() ? '?' + params.toString() : '';
+
+        const fetchUrl = API_URL + '/' + endpoint + queryString;
+        console.log('[WebBuilder Hydration] Fetching:', fetchUrl);
+
+        try {
+          const response = await fetch(fetchUrl);
+          console.log('[WebBuilder Hydration] Response status:', response.status, response.statusText);
+
+          if (!response.ok) {
+            throw new Error('Failed to fetch ' + endpoint + ' - Status: ' + response.status);
+          }
+
+          const result = await response.json();
+          const data = result.data || result;
+
+          console.log('[WebBuilder Hydration] Received data for', componentType, ':', data);
+
+          renderers[componentType](data, container);
+          container.classList.remove('loading');
+          container.classList.add('loaded');
+
+          if (CONFIG.debug) console.log('[WebBuilder Hydration] Hydrated:', componentType, 'with', Array.isArray(data) ? data.length : 1, 'items');
+        } catch (error) {
+          console.error('[WebBuilder Hydration] Error for', componentType, ':', error.message);
+          console.error('[WebBuilder Hydration] Attempted URL:', fetchUrl);
+          container.innerHTML = '<p class="error" style="color: #ef4444; padding: 1rem; text-align: center;">Unable to load ' + endpoint + '. API: ' + fetchUrl + '</p>';
+          container.classList.remove('loading');
+          container.classList.add('error');
+        }
+      }
+
+      // Initialize hydration
+      function initHydration() {
+        const dynamicContainers = document.querySelectorAll('[data-component]');
+
+        if (CONFIG.debug) {
+          console.log('WebBuilder Hydration: Found', dynamicContainers.length, 'dynamic components');
+        }
+
+        dynamicContainers.forEach(container => {
+          // Use IntersectionObserver for lazy loading
+          const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                hydrateComponent(entry.target);
+                observer.unobserve(entry.target);
+              }
+            });
+          }, { rootMargin: '100px' });
+
+          observer.observe(container);
+        });
+      }
+
+      // Run on DOM ready
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initHydration);
+      } else {
+        initHydration();
+      }
+    })();
+    </script>
+
+    <!-- Dynamic Component Styles -->
+    <style>
+      /* Dynamic component container */
+      [data-component] {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 1.5rem;
+        min-height: 200px;
+        transition: opacity 0.3s ease;
+      }
+
+      [data-component].loading {
+        opacity: 0.6;
+      }
+
+      [data-component].loading::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 40px;
+        height: 40px;
+        margin: -20px 0 0 -20px;
+        border: 3px solid var(--color-border, #e5e7eb);
+        border-top-color: var(--color-primary, #3b82f6);
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+      }
+
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+
+      /* Dynamic cards */
+      .dynamic-card {
+        background: var(--color-surface, #fff);
+        border-radius: var(--radius-md, 16px);
+        overflow: hidden;
+        box-shadow: var(--shadow-md, 0 4px 6px -1px rgb(0 0 0 / 0.1));
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .dynamic-card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-lg, 0 10px 40px rgb(0 0 0 / 0.08));
+      }
+
+      .dynamic-card .card-image {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+      }
+
+      .dynamic-card .card-content {
+        padding: 1.25rem;
+      }
+
+      .dynamic-card .card-date,
+      .dynamic-card .card-badge {
+        display: inline-block;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--color-primary, #3b82f6);
+        margin-bottom: 0.5rem;
+      }
+
+      .dynamic-card .card-title {
+        font-size: 1.125rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        color: var(--color-text, #1f2937);
+      }
+
+      .dynamic-card .card-description {
+        font-size: 0.875rem;
+        color: var(--color-text-muted, #6b7280);
+        margin-bottom: 1rem;
+        line-height: 1.6;
+      }
+
+      .dynamic-card .card-location,
+      .dynamic-card .card-schedule,
+      .dynamic-card .card-instructor,
+      .dynamic-card .card-duration {
+        display: block;
+        font-size: 0.8125rem;
+        color: var(--color-text-muted, #6b7280);
+        margin-bottom: 0.5rem;
+      }
+
+      .dynamic-card .card-price {
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: var(--color-text, #1f2937);
+        margin: 0.75rem 0;
+      }
+
+      .dynamic-card .card-price .price-period {
+        font-size: 0.875rem;
+        font-weight: 400;
+        color: var(--color-text-muted, #6b7280);
+      }
+
+      .dynamic-card .card-features {
+        list-style: none;
+        padding: 0;
+        margin: 1rem 0;
+        font-size: 0.875rem;
+      }
+
+      .dynamic-card .card-features li {
+        padding: 0.25rem 0;
+        color: var(--color-text-muted, #6b7280);
+      }
+
+      .dynamic-card .card-btn {
+        display: inline-block;
+        padding: 0.75rem 1.5rem;
+        background: var(--color-primary, #3b82f6);
+        color: white;
+        font-weight: 600;
+        font-size: 0.875rem;
+        border-radius: var(--radius-sm, 8px);
+        text-align: center;
+        transition: background 0.2s ease, transform 0.2s ease;
+        margin-top: 0.5rem;
+      }
+
+      .dynamic-card .card-btn:hover {
+        background: var(--color-secondary, #2563eb);
+        transform: translateY(-2px);
+      }
+
+      /* Membership featured card */
+      .membership-card.featured {
+        border: 2px solid var(--color-primary, #3b82f6);
+        transform: scale(1.02);
+      }
+
+      /* No data / Error states */
+      .no-data, .error {
+        grid-column: 1 / -1;
+        text-align: center;
+        padding: 2rem;
+        color: var(--color-text-muted, #6b7280);
+      }
+
+      .error {
+        color: #ef4444;
+      }
+    </style>
+
+</body>
+</html>
